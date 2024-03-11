@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../lib//firebase";
 
 const Login = () => {
 
+    const googleProvider = new GoogleAuthProvider();
+    const githubProvider = new GithubAuthProvider();
+
     const [user, setUser] = useState<User | null>(null);
 
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            setUser(user);
-        });
-    }, []);
+    // useEffect(() => {
+    //     onAuthStateChanged(auth, (user) => {
+    //         setUser(user);
+    //     });
+    // }, []);
 
-    const GoogleProvider = new GoogleAuthProvider();
 
     const signInWithGoogle = async () => {
-        await signInWithPopup(auth, GoogleProvider)
+        await signInWithPopup(auth, googleProvider)
+    }
+
+    const signInWithGitHub = async () => {
+        await signInWithPopup(auth, githubProvider)
     }
 
     return (
@@ -26,7 +32,7 @@ const Login = () => {
                     <p className="mb-5 text-center">ログイン</p>
                     <div className="flex gap-3 flex-col items-center">
                         <button onClick={signInWithGoogle} className="bg-white w-max border border-black py-2 px-4 rounded">Googleでログイン</button>
-                        <button className="bg-black text-white w-max border border-black py-2 px-4 rounded">GitHubでログイン</button>
+                        <button onClick={signInWithGitHub} className="bg-black text-white w-max border border-black py-2 px-4 rounded">GitHubでログイン</button>
                     </div>
                 </div>
             </div>

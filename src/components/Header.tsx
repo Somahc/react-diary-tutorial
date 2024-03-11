@@ -1,3 +1,4 @@
+import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../lib/firebase";
 import { Link } from "react-router-dom"; 
@@ -19,7 +20,7 @@ const Header = () => {
                         <div>
                             <img src={user.photoURL as string} alt="" className="w-12 h-12 rounded" />
                         </div>
-                        <button className="bg-black text-white py-[7px] px-4 rounded-md">Logout</button>
+                        <button onClick={() => signOut(auth)} className="bg-black text-white py-[7px] px-4 rounded-md">Logout</button>
                     </div>) :
                     (<button className="bg-black text-white py-[7px] px-4 rounded-md"><Link to="login">Login</Link></button>)
                 }

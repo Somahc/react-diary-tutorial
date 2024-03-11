@@ -6,10 +6,12 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Create from './pages/Create'
 import NotFound from './pages/NotFound'
+import { useAuthState } from 'react-firebase-hooks/auth'  
+import { auth } from './lib/firebase'
 
 function App() {
 
-  const user: boolean = false;
+  const [user] = useAuthState(auth)
 
   return (
     <>
