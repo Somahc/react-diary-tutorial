@@ -1,8 +1,10 @@
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../lib/firebase";
 import { Link } from "react-router-dom"; 
 
 const Header = () => {
 
-    const user: boolean = false;
+    const [user] = useAuthState(auth);
 
     return (
     <header className="bg-white">
@@ -15,7 +17,7 @@ const Header = () => {
                 {user ?
                     (<div className="flex gap-3 items-center">
                         <div>
-                            <img src={user.photoURL as string} alt="" className="w-10 h-10 rounded-full" />
+                            <img src={user.photoURL as string} alt="" className="w-12 h-12 rounded" />
                         </div>
                         <button className="bg-black text-white py-[7px] px-4 rounded-md">Logout</button>
                     </div>) :
