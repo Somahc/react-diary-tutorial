@@ -4,6 +4,7 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Create from './pages/Create'
+import NotFound from './pages/NotFound'
 
 function App() {
 
@@ -13,7 +14,8 @@ function App() {
         <Header />
         {/* <Home /> */}
         {/* <Login /> */}
-        <Create />
+        {/* <Create /> */}
+        <NotFound />
         <Footer />
       </div>
     </>
