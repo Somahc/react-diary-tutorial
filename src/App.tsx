@@ -2,6 +2,7 @@ import './App.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
+import Login from './pages/Login'
 
 function App() {
 
@@ -9,7 +10,8 @@ function App() {
     <>
       <div>
         <Header />
-        <Home />
+        {/* <Home /> */}
+        <Login />
         <Footer />
       </div>
     </>
