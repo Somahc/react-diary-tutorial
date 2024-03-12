@@ -1,7 +1,8 @@
 import { addDoc, collection, serverTimestamp } from '@firebase/firestore';
-import { auth, db } from '../lib/firebase';
-import { FormEvent, useState } from 'react';
+import { auth, db, storage } from '../lib/firebase';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const Create = () => {
 
@@ -9,13 +10,28 @@ const Create = () => {
 
     const [title, setTitle] = useState<string>("");
     const [content, setContent] = useState<string>("");
+    const [file, setFile] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string>("/no-image.png")
     
     const submitDiary = async (e: FormEvent) => {
         e.preventDefault();
 
+        let url: string = "";
+
         if(title && content) {
+            if(file) {
+                const storageRef = ref(storage, `image/${file?.name}`);
+                await uploadBytes(storageRef, file).then(() => {
+                    console.log('Uploaded a blob or file!');
+                })
+        
+                url = await getDownloadURL(storageRef);   
+            }else{
+                url = "https://firebasestorage.googleapis.com/v0/b/short-diary-8853d.appspot.com/o/no-image.png?alt=media&token=4f779ea4-b49c-4744-8dfe-5400902c7dff";
+            }
+
             await addDoc(collection(db, "diaries"), {
-                thumbnail: "",
+                thumbnail: url,
                 title: title,
                 content: content,
                 userId: user?.uid,
@@ -24,6 +40,13 @@ const Create = () => {
             });
         }else{
             alert("タイトルと内容は必須です。");
+        }
+    }
+
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            setFile(e.target.files[0])
+            setPreview(URL.createObjectURL(e.target.files[0]))
         }
     }
 
@@ -38,9 +61,9 @@ const Create = () => {
                                 <h3 className="text-2xl mb-2">サムネを選ぶ</h3>
                                 <div>
                                     <div>
-                                        <img src="/no-image.png" alt="" onClick={() => document.getElementById('file-input')?.click()} className="cursor-pointer" />
+                                        <img src={preview} alt="" onClick={() => document.getElementById('file-input')?.click()} className="cursor-pointer" />
                                     </div>
-                                    <input type="file" id="file-input" className="hidden" />
+                                    <input type="file" onChange={handleImageChange} id="file-input" className="hidden" />
                                 </div>
                             </div>
                             <div className="mb-10">
