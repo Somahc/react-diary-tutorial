@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { DocumentData, collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
 
@@ -23,6 +24,9 @@ const Home = () => {
 
     return (
         <main className="bg-yellow-300 h-screen">
+            <Helmet>
+                <title>Short Diary | Home</title>
+            </Helmet>
             <div className="container mx-auto">
                 <div className="py-20">
                     <div className="text-center mb-[120px]">

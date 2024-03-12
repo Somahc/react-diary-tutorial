@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import toast, { Toaster } from 'react-hot-toast';
+import { Helmet } from 'react-helmet-async';
 
 const Create = () => {
 
@@ -67,6 +68,9 @@ const Create = () => {
     return (
         <main className="bg-yellow-300">
             <Toaster />
+            <Helmet>
+                <title>Short Diary | Create</title>
+            </Helmet>
             <div className="container mx-auto">
                 <div className="grid grid-cols-12">
                     <div className="col-start-3 col-span-8 bg-white my-12 p-4 rounded">

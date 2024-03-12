@@ -1,5 +1,6 @@
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../lib//firebase";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
 
@@ -16,6 +17,9 @@ const Login = () => {
 
     return (
         <main className="h-screen bg-yellow-300 pt-10">
+            <Helmet>
+                <title>Short Diary | Login</title>
+            </Helmet>
             <div className="container mx-auto">
                 <div className="bg-white shadow-md rounded-md py-12">
                     <p className="mb-5 text-center">ログイン</p>
