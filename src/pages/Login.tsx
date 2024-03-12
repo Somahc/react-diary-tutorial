@@ -1,21 +1,10 @@
-import { useEffect, useState } from "react";
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../lib//firebase";
 
 const Login = () => {
 
     const googleProvider = new GoogleAuthProvider();
     const githubProvider = new GithubAuthProvider();
-
-    const [user, setUser] = useState<User | null>(null);
-
-    // useEffect(() => {
-    //     onAuthStateChanged(auth, (user) => {
-    //         setUser(user);
-    //     });
-    // }, []);
-
 
     const signInWithGoogle = async () => {
         await signInWithPopup(auth, googleProvider)
