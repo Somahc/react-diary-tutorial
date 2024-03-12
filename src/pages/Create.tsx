@@ -3,6 +3,7 @@ import { auth, db, storage } from '../lib/firebase';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Create = () => {
 
@@ -11,14 +12,19 @@ const Create = () => {
     const [title, setTitle] = useState<string>("");
     const [content, setContent] = useState<string>("");
     const [file, setFile] = useState<File | null>(null);
-    const [preview, setPreview] = useState<string>("/no-image.png")
+    const [preview, setPreview] = useState<string>("/no-image.png");
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     
     const submitDiary = async (e: FormEvent) => {
         e.preventDefault();
 
-        let url: string = "";
-
         if(title && content) {
+
+            toast.loading('送信中...');
+            setIsLoading(true);
+
+            let url: string = "";
+
             if(file) {
                 const storageRef = ref(storage, `image/${file?.name}`);
                 await uploadBytes(storageRef, file).then(() => {
@@ -38,6 +44,13 @@ const Create = () => {
                 userName: user?.displayName,
                 createdAt: serverTimestamp(),
             });
+
+            toast.dismiss();
+            toast.success('投稿完了!😎')
+            setTitle("");
+            setContent("");
+            setPreview("/no-image.png");
+            setIsLoading(false);
         }else{
             alert("タイトルと内容は必須です。");
         }
@@ -52,6 +65,7 @@ const Create = () => {
 
     return (
         <main className="bg-yellow-300">
+            <Toaster />
             <div className="container mx-auto">
                 <div className="grid grid-cols-12">
                     <div className="col-start-3 col-span-8 bg-white my-12 p-4 rounded">
@@ -68,13 +82,13 @@ const Create = () => {
                             </div>
                             <div className="mb-10">
                                 <h3 className="text-2xl mb-2">タイトル</h3>
-                                <input type="text" onChange={(e) => setTitle(e.target.value)} className="border border-black w-full p-2 rounded" placeholder="5文字以内でお願いします。" />
+                                <input type="text" onChange={(e) => setTitle(e.target.value)} className="border border-black w-full p-2 rounded" placeholder="5文字以内でお願いします。" value={title} />
                             </div>
                             <div className="mb-10">
                                 <h3 className="text-2xl mb-2">内容を書く</h3>
-                                <textarea onChange={(e) => setContent(e.target.value)} className="border border-black w-full p-2 rounded reseize-none h-[200px]" placeholder="30文字以内でお願いします。"></textarea>
+                                <textarea onChange={(e) => setContent(e.target.value)} className="border border-black w-full p-2 rounded reseize-none h-[200px]" placeholder="30文字以内でお願いします。" value={content} ></textarea>
                             </div>
-                            <button type="submit" className="bg-blue-700 text-white py-2 px-7 rounded">Save</button>
+                            <button type="submit" disabled={isLoading} className="bg-blue-700 text-white py-2 px-7 rounded">投稿する!</button>
                         </form>
                     </div>
                 </div>
