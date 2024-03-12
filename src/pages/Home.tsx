@@ -37,7 +37,7 @@ const Home = () => {
                                         <img src={diary.userIcon} alt="" className="w-6 h-6 rounded-full" />
                                     </div>
                                     <div>
-                                        <p className="text-white">XXXX</p>
+                                        <p className="text-white">{diary.userName}</p>
                                     </div>
                                 </div>
                                 <div>

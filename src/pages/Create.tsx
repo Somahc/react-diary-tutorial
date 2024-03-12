@@ -41,6 +41,7 @@ const Create = () => {
                 title: title,
                 content: content,
                 userId: user?.uid,
+                userIcon: user?.photoURL,
                 userName: user?.displayName,
                 createdAt: serverTimestamp(),
             });
