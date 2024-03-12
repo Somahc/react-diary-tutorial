@@ -1,6 +1,26 @@
 import { Link } from "react-router-dom";
+import { DocumentData, collection, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "../lib/firebase";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+
+    const [allDiaries, setAllDiaries] = useState<DocumentData[]>([]);
+
+    const getAllDiaries = async () => {
+        const querySnapshot = await getDocs(query(collection(db, "diaries"), orderBy("createdAt", "desc")));
+        const allDiaries = querySnapshot.docs.map((doc) => {
+            return doc.data();
+        });
+
+        setAllDiaries(allDiaries);
+        console.log(allDiaries);
+    }
+
+    useEffect(() => {
+        getAllDiaries();
+    }, []);
+
     return (
         <main className="bg-yellow-300 h-screen">
             <div className="container mx-auto">
@@ -10,23 +30,25 @@ const Home = () => {
                         <button className="rounded py-2 px-5 border border-black bg-white"><Link to="/create">日記を書く</Link></button>
                     </div>
                     <ul className="grid lg:grid-cols-8 md:grid-cols-4 gap-10">
-                        <li className="col-span-2 bg-white p-2 rounded relative">
-                            <div className="bg-blue-500 py-1 px-6 gap-2 flex justify-center items-center w-max absolute top-0 left-[50%] translate-x-[-50%] rounded-b">
-                                <div>
-                                    <img src="/user-icon.png" alt="" className="w-6 h-6 rounded-full" />
+                        {allDiaries.map((diary, index) => (
+                            <li className="col-span-2 bg-white p-2 rounded relative" key={index}>
+                                <div className="bg-blue-500 py-1 px-6 gap-2 flex justify-center items-center w-max absolute top-0 left-[50%] translate-x-[-50%] rounded-b">
+                                    <div>
+                                        <img src={diary.userIcon} alt="" className="w-6 h-6 rounded-full" />
+                                    </div>
+                                    <div>
+                                        <p className="text-white">XXXX</p>
+                                    </div>
                                 </div>
                                 <div>
-                                    <p className="text-white">XXXX</p>
+                                    <img src={diary.thumbnail} alt="" className="w-full h-[180px] object-cover" />
                                 </div>
-                            </div>
-                            <div>
-                                <img src="/no-image.png" alt="" className="w-full h-[180px] object-cover" />
-                            </div>
-                            <div>
-                                <h3 className="text-[10px]">2024/01/10</h3>
-                                <p>今日はFirebaseの勉強をしたよ。</p>
-                            </div>
-                        </li>
+                                <div>
+                                    <h3 className="text-[10px]">{diary.createdAt.toDate().toLocaleString()}</h3>
+                                    <p>{diary.content}</p>
+                                </div>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </div>
