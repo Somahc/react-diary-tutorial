@@ -1,30 +1,17 @@
-# React + TypeScript + Vite
+# 日記アプリ
+## 概要
+- FirebaseとReactの学習のために行ったハンズオン教材
+- Google/GitHubアカウントでのログイン、ログアウト機能
+- 写真と文章の投稿
+- Vercelにてデプロイ済み
+  - (2025年4月にFirebase側で有効期限が切れて利用不可になることに注意)
+https://react-diary-tutorial-12shsfefm-somas-projects-b116bc1d.vercel.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 教材
+「0から始めるFirebase入門」
+https://zenn.dev/y_ta/books/d007090d6478dc
 
-Currently, two official plugins are available:
+※そのままでは動かなかった部分は適宜変更を加えました。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 技術スタック等
+React, TypeScript, Firebase, TailwindCSS, Vercel
